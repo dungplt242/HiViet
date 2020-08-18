@@ -58,7 +58,7 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void setupCamera() {
         CameraPosition cameraPosition = new CameraPosition.Builder().
-                target(new LatLng(48.0980134, 4.1424918)).zoom(5.6f).build();
+                target(new LatLng(15.444571, 106.584812)).zoom(5.6f).build();
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         Toast.makeText(this, "Find Vietnam", Toast.LENGTH_LONG).show();
     }
