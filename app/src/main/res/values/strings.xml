@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HiViet</string>
+    <string name="title_activity_menu">HiViet</string>
+    <string name="title_activity_game">Map</string>
 </resources>
