@@ -72,11 +72,11 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private Marker createMarker(LatLng latLng, int imageId) {
-        BitmapDescriptor bitmapDescriptor = createBitMapDescriptop(imageId);
+        BitmapDescriptor bitmapDescriptor = createBitMapDescriptor(imageId);
         return mMap.addMarker(new MarkerOptions().position(latLng).icon(bitmapDescriptor));
     }
 
-    private BitmapDescriptor createBitMapDescriptop(int imageId) {
+    private BitmapDescriptor createBitMapDescriptor(int imageId) {
         Bitmap logo = BitmapFactory.decodeResource(getResources(), imageId);
         logo = Bitmap.createScaledBitmap(logo, logo.getWidth(), logo.getHeight(), false);
         return BitmapDescriptorFactory.fromBitmap(logo);
