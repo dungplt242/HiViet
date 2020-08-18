@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -58,7 +59,7 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void setupCamera() {
         CameraPosition cameraPosition = new CameraPosition.Builder().
-                target(new LatLng(15.444571, 106.584812)).zoom(5.6f).build();
+                target(new LatLng(16.199493,105.3424463)).zoom(5.6f).build();
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         Toast.makeText(this, "Find Vietnam", Toast.LENGTH_LONG).show();
     }
