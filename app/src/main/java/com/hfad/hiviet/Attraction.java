@@ -8,11 +8,8 @@ public class Attraction {
     private LatLng location;
     private String title;
     private String description;
-    private int logoID;
-
-    public Attraction(double lat, double lng) {
-        this.location = new LatLng(lat, lng);
-    }
+    private String logoFileName;
+    //use getResource.getIdentifier(logoFileName, "drawable", getPackageName()) to get id
 
     public Attraction(Scanner scan) {
         title = scan.nextLine();
@@ -20,6 +17,7 @@ public class Attraction {
         double lat = Double.parseDouble(scan.nextLine()),
                lng = Double.parseDouble(scan.nextLine());
         location = new LatLng(lat, lng);
+        logoFileName = scan.nextLine();
     }
 
     public LatLng getLocation() {
@@ -34,7 +32,7 @@ public class Attraction {
         return description;
     }
 
-    public int getLogoID() {
-        return logoID;
+    public String getLogoFileName() {
+        return logoFileName;
     }
 }
