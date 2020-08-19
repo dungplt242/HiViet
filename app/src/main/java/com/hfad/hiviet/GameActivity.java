@@ -58,7 +58,6 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     private Timer timer;
     private CountDownTimer countDownTimer;
 
-    // TODO: clean up this function
     private GoogleMap.OnMapClickListener mapOnClickListener = new GoogleMap.OnMapClickListener() {
 
         private LatLng guessedPoint;
@@ -69,31 +68,37 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             if (!hasShownResult) {
                 this.guessedPoint = guessedPoint;
                 this.targetPoint = currentAttraction.getLocation();
-
                 countDownTimer.cancel();
                 showResult();
                 evaluateResult();
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                currentCircle.remove();
-                                guessMarker.remove();
-                                targetMarker.remove();
-                            }
-                        });
-                        timer.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                startRound();
-                            }
-                        }, 0);
-                    }
-                }, delayBetweenRounds);
+                timer.schedule(prepareNewRound(), delayBetweenRounds);
             }
+        }
+
+        void removeDrewObjects() {
+            currentCircle.remove();
+            guessMarker.remove();
+            targetMarker.remove();
+        }
+
+        TimerTask prepareNewRound() {
+            return new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            removeDrewObjects();
+                        }
+                    });
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            startRound();
+                        }
+                    }, 0);
+                }
+            };
         }
 
         private void evaluateResult() {
@@ -119,25 +124,17 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
-        // TODO: replace dummy data with real data
-        attractionList = new ArrayList<>();
-        loadAttractionData();
-
-        LatLng temp = attractionList.get(0).getLocation();
+        loadAttractionForGame();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         initComponents();
     }
 
-    private void loadAttractionData() {
-        Scanner scan = new Scanner(getResources().openRawResource(R.raw.attraction_data));
-        while (scan.hasNextLine())
-            attractionList.add(new Attraction(scan));
-        scan.close();
+    private void loadAttractionForGame() {
+        //TODO: SELECT 5 RANDOM ATTRACTION FROM THE LIST
+        attractionList = AttractionList.builder().getList();
     }
-
 
     private void initComponents() {
         mTimerTextView = findViewById(R.id.timerText);
@@ -221,20 +218,29 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         }
         else {
             // the current game is finished
-            // TODO: handle post-game actions
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mDialogueTextView.setText(String.format(getString(R.string.total_score), currentScore));
-                }
-            });
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    finish();
-                }
-            }, 2000);
+            runOnUiThread(displayScore());
+            timer.schedule(summarizeGame(), 2000);
         }
+    }
+
+    TimerTask summarizeGame() {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                //TODO: SHOW MESSAGE (BETTER LUCK NEXT TIME OR UNLOCKED ACHIEVEMENT)
+                finish();
+            }
+        };
+    }
+
+    Runnable displayScore() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                mDialogueTextView.setText(String.format(getString(R.string.total_score),
+                        currentScore));
+            }
+        };
     }
 
     // score is in range [0..100]

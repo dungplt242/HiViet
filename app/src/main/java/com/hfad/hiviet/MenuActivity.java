@@ -2,9 +2,11 @@ package com.hfad.hiviet;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.AsyncQueryHandler;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class MenuActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -55,6 +58,21 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
         mapSettings();
         prepareAssets();
         setupCamera();
+        new LoadData().execute();
+    }
+
+    private class LoadData extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            loadAttractionData();
+            //TODO: LOAD USER'S UNLOCKED ATTRACTION
+            return null;
+        }
+    }
+
+    private void loadAttractionData() {
+        Scanner scanner = new Scanner(getResources().openRawResource(R.raw.attraction_data));
+        AttractionList.loadData(scanner);
     }
 
     private void setupCamera() {
