@@ -64,28 +64,6 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         private LatLng guessedPoint;
         private LatLng targetPoint;
 
-        private TimerTask startNewRound = new TimerTask() {
-            @Override
-            public void run() {
-                startRound();
-            }
-        };
-
-        private TimerTask removeDrewItems = new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        currentCircle.remove();
-                        guessMarker.remove();
-                        targetMarker.remove();
-                    }
-                });
-                timer.schedule(startNewRound, 0);
-            }
-        };
-
         @Override
         public void onMapClick(LatLng guessedPoint) {
             if (!hasShownResult) {
@@ -95,7 +73,26 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                 countDownTimer.cancel();
                 showResult();
                 evaluateResult();
-                timer.schedule(removeDrewItems, delayBetweenRounds);
+
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                currentCircle.remove();
+                                guessMarker.remove();
+                                targetMarker.remove();
+                            }
+                        });
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                startRound();
+                            }
+                        }, 0);
+                    }
+                }, delayBetweenRounds);
             }
         }
 
@@ -210,7 +207,14 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     // WARNING: not meant to be run on main thread
     private void startRound() {
         if (currentRound < numRounds) {
-            currentAttraction = attractionList.get(currentRound);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    currentAttraction = attractionList.get(currentRound);
+                    mDialogueTextView.setText(String.format(getString(R.string.find_attraction),
+                            currentAttraction.getTitle()));
+                }
+            });
             ++currentRound;
             hasShownResult = false;
             countDownTimer.start();
