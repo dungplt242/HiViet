@@ -5,7 +5,6 @@ import androidx.fragment.app.FragmentActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,7 +28,8 @@ import java.util.TimerTask;
 public class GameActivity extends FragmentActivity implements OnMapReadyCallback {
 
     // views
-    private TextView mTextView;
+    private TextView mTimerTextView;
+    private TextView mDialogueTextView;
 
     // data
     private GoogleMap mMap;
@@ -44,7 +44,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     // game states
     private int currentScore;
     private int currentRound;
-    private boolean hasGuessed;
+    private boolean hasShownResult;
 
     // game graphics
     private Attraction currentAttraction;
@@ -59,45 +59,61 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
     // TODO: clean up this function
     private GoogleMap.OnMapClickListener mapOnClickListener = new GoogleMap.OnMapClickListener() {
-        @Override
-        public void onMapClick(LatLng guessedPoint) {
-            if (!hasGuessed) {
-                hasGuessed = true;
-                countDownTimer.cancel();
-                LatLng targetPoint = currentAttraction.getLocation();
-                guessMarker = mMap.addMarker(new MarkerOptions().position(guessedPoint));
-                targetMarker = mMap.addMarker(new MarkerOptions().position(targetPoint));
-                final int METERS_TO_KILOMETERS = 1000;
-                double distanceError = calculateDistance(guessedPoint, targetPoint);
-                currentCircle = mMap.addCircle(new CircleOptions().center(targetPoint)
-                        .strokeWidth(8)
-                        .strokeColor(Color.RED)
-                        .radius(METERS_TO_KILOMETERS * distanceError));
-                currentScore += calculateScore(distanceError);
 
-                // TODO: use proper string formatting + replace with string resources
-                mTextView.setText("Your guess was " + df.format(distanceError) + " km away. Your score is " + currentScore);
+        private LatLng guessedPoint;
+        private LatLng targetPoint;
 
-                timer.schedule(new TimerTask() {
+        private TimerTask startNewRound = new TimerTask() {
+            @Override
+            public void run() {
+                startRound();
+            }
+        };
+
+        private TimerTask removeDrewItems = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                currentCircle.remove();
-                                guessMarker.remove();
-                                targetMarker.remove();
-                            }
-                        });
-                        timer.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                startRound();
-                            }
-                        }, 0);
+                        currentCircle.remove();
+                        guessMarker.remove();
+                        targetMarker.remove();
                     }
-                }, delayBetweenRounds);
+                });
+                timer.schedule(startNewRound, 0);
             }
+        };
+
+        @Override
+        public void onMapClick(LatLng guessedPoint) {
+            if (!hasShownResult) {
+                this.guessedPoint = guessedPoint;
+                this.targetPoint = currentAttraction.getLocation();
+
+                countDownTimer.cancel();
+                showResult();
+                evaluateResult();
+                timer.schedule(removeDrewItems, delayBetweenRounds);
+            }
+        }
+
+        private void evaluateResult() {
+            final int METERS_TO_KILOMETERS = 1000;
+            double distanceError = calculateDistance(guessedPoint, targetPoint);
+            currentCircle = mMap.addCircle(new CircleOptions().center(targetPoint)
+                    .strokeWidth(8)
+                    .strokeColor(Color.RED)
+                    .radius(METERS_TO_KILOMETERS * distanceError));
+            currentScore += calculateScore(distanceError);
+            mDialogueTextView.setText(String.format(getString(R.string.guess_text),
+                    df.format(distanceError), currentScore));
+        }
+
+        private void showResult() {
+            hasShownResult = true;
+            guessMarker = mMap.addMarker(new MarkerOptions().position(guessedPoint));
+            targetMarker = mMap.addMarker(new MarkerOptions().position(targetPoint));
         }
     };
 
@@ -121,7 +137,8 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void initComponents() {
-        mTextView = findViewById(R.id.textView);
+        mTimerTextView = findViewById(R.id.timerText);
+        mDialogueTextView = findViewById(R.id.dialogue_text);
     }
 
     @Override
@@ -148,17 +165,18 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         countDownTimer = new CountDownTimer(roundTime, 1000) {
             @Override
             public void onTick(long currentTime) {
-                mTextView.setText(String.valueOf(currentTime/1000+1));
+                mTimerTextView.setText(String.valueOf(currentTime/1000+1));
             }
 
             @Override
             public void onFinish() {
                 // if execution reached this point,
                 // the player hadn't made a guess last round
+                hasShownResult = true;
                 LatLng targetPoint = currentAttraction.getLocation();
                 targetMarker = mMap.addMarker(new MarkerOptions().position(targetPoint));
-                // TODO: use proper string formatting + replace with string resources
-                mTextView.setText("You didn't make any guess! Your score is " + currentScore);
+
+                mDialogueTextView.setText(String.format(getString(R.string.time_out_text), currentScore));
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
@@ -188,7 +206,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         if (currentRound < numRounds) {
             currentAttraction = attractionList.get(currentRound);
             ++currentRound;
-            hasGuessed = false;
+            hasShownResult = false;
             countDownTimer.start();
         }
         else {
@@ -197,7 +215,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mTextView.setText("Your total score is " + currentScore);
+                    mDialogueTextView.setText(String.format(getString(R.string.total_score), currentScore));
                 }
             });
             timer.schedule(new TimerTask() {
