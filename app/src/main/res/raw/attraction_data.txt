@@ -7,7 +7,7 @@ Ho Chi Minh City
 For big city fans, no visit to Vietnam is really complete without a visit to Ho Chi Minh City, the buzzing and crazy commercial hub of the country. The streets are an insane clog of motorbikes and cars, the restaurant and café scene is incredibly cosmopolitan, and the shopping is the best in the country. At its center is Dong Khoi, a relatively small and easily navigable central district, which holds most of the city's sights. Here, you'll find the HCMC Museum, with a brilliant collection of artifacts that weaves together the story of the city.
 10.772557
 106.698240
-attraction_logo_halong_bay
+attraction_logo_ho_chi_minh_city
 Hue
 One of Vietnam's most historic towns, Hue is packed to the brim with relics from the reign of the 19th-century Nguyen emperors. Sitting along the banks of the gorgeous Perfume River, the Imperial Enclosure is a huge site set within walls that sprawl for 2.5 kilometers. While touring the grounds check out the gorgeous Ngo Mon Gate, the Thai Hoa Palace with its finely lacquered interior detailing, the Dien Tho Residence where the Queen Mothers would live, and the Halls of Mandarins with its preserved ceiling murals.
 16.469693
@@ -32,7 +32,7 @@ Sapa Countryside
 The verdant rice field countryside surrounding Sapa, bordered by the jagged peaks of the Hoang Lien Mountains (often still known by their French colonial era name of the Tonkinese Alps), are home to Vietnam's most beautiful rural vistas. The deep valleys here are home to a diverse mix of the country's ethnic minorities, including the Hmong, Giay, and Red Dzao people, while the rippling hills are terraced with rice fields and overlooked by the country's tallest peak, Fansipan Mountain.
 22.338175
 103.845521
-attraction_logo_hoi_an
+attraction_logo_sapa
 Hanoi
 Vietnam's capital is the frenetic heartbeat of the nation and a place that befuddles travelers as much as it charms them. The motorbike frenzy, pollution, and constant clamor of street vendors can get too much for some travelers, but if you want to dive into Vietnamese city life, Hanoi is the place to do it. The old town quarter has plenty of dilapidated charm on offer, while history fans should make a beeline here simply to see the bundle of excellent museums.
 21.024053
