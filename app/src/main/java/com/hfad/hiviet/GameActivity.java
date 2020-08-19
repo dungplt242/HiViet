@@ -5,7 +5,6 @@ import androidx.fragment.app.FragmentActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -108,17 +108,22 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
         // TODO: replace dummy data with real data
         attractionList = new ArrayList<>();
-        attractionList.add(new Attraction(16, 106));
-        attractionList.add(new Attraction(21, 106));
-        attractionList.add(new Attraction(16,106));
-        attractionList.add(new Attraction(21, 106));
-        attractionList.add(new Attraction(16, 106));
+        loadAttractionData();
 
+        LatLng temp = attractionList.get(0).getLocation();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         initComponents();
     }
+
+    private void loadAttractionData() {
+        Scanner scan = new Scanner(getResources().openRawResource(R.raw.attraction_data));
+        while (scan.hasNextLine())
+            attractionList.add(new Attraction(scan));
+        scan.close();
+    }
+
 
     private void initComponents() {
         mTextView = findViewById(R.id.textView);
