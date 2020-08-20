@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PlaceItemActivity"></activity>
+        <activity android:name=".FavoriteActivity" />
         <activity android:name=".ListPlace" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

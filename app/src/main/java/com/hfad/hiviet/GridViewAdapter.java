@@ -13,8 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.w3c.dom.Attr;
-
 import java.util.List;
 
 public class GridViewAdapter extends ArrayAdapter<Attraction> {
@@ -34,17 +32,28 @@ public class GridViewAdapter extends ArrayAdapter<Attraction> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        MyViewHolder myViewHolder;
         if (convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView = layoutInflater.inflate(layoutID, null, false);
+            myViewHolder = assignViewHolder(convertView);
+            convertView.setTag(myViewHolder);
         }
-        displayAttractionImage(convertView, attractions.get(position));
-        displayAttractionName(convertView, attractions.get(position));
+        else myViewHolder = (MyViewHolder) convertView.getTag();
+        displayAttractionImage(myViewHolder, attractions.get(position));
+        displayAttractionName(myViewHolder, attractions.get(position));
         return convertView;
     }
 
-    private void displayAttractionImage(View convertView, Attraction attraction) {
-        ImageView imageView = convertView.findViewById(R.id.image_logo);
+    private MyViewHolder assignViewHolder(View convertView) {
+        MyViewHolder myViewHolder = new MyViewHolder();
+        myViewHolder.setTextView(convertView.findViewById(R.id.text_name));
+        myViewHolder.setImageView(convertView.findViewById(R.id.image_logo));
+        return myViewHolder;
+    }
+
+    private void displayAttractionImage(MyViewHolder myViewHolder, Attraction attraction) {
+        ImageView imageView = myViewHolder.getImageView();
         int logoID = getLogoId(attraction);
         Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), logoID);
         imageView.setImageBitmap(bmp);
@@ -56,8 +65,8 @@ public class GridViewAdapter extends ArrayAdapter<Attraction> {
                 attraction.getLogoFileName(), "drawable", context.getPackageName());
     }
 
-    private void displayAttractionName(View convertView, Attraction attraction) {
-        TextView textView = convertView.findViewById(R.id.text_name);
+    private void displayAttractionName(MyViewHolder myViewHolder, Attraction attraction) {
+        TextView textView = myViewHolder.getTextView();
         if (attraction.isUnlocked()) textView.setText(attraction.getTitle());
         else textView.setText("LOCKED");
     }
@@ -65,5 +74,26 @@ public class GridViewAdapter extends ArrayAdapter<Attraction> {
     @Override
     public int getCount() {
         return attractions.size();
+    }
+
+    private class MyViewHolder {
+        private TextView textView;
+        private ImageView imageView;
+
+        public TextView getTextView() {
+            return textView;
+        }
+
+        public ImageView getImageView() {
+            return imageView;
+        }
+
+        public void setTextView(View textView) {
+            this.textView = (TextView) textView;
+        }
+
+        public  void setImageView(View imageView) {
+            this.imageView = (ImageView) imageView;
+        }
     }
 }

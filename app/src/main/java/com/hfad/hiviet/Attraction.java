@@ -11,8 +11,9 @@ public class Attraction {
     private String title;
     private String description;
     private String logoFileName;
-    private boolean unlocked = false;
     //use getResource.getIdentifier(logoFileName, "drawable", getPackageName()) to get id
+    private boolean unlocked = false;
+    private boolean favorite = false;
 
     public Attraction(Scanner scan) {
         id = Integer.parseInt(scan.nextLine());
@@ -58,5 +59,17 @@ public class Attraction {
 
     public int getId() {
         return id;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void removeFromFavorite() {
+        favorite = false;
+    }
+
+    public void addToFavorite() {
+        favorite = true;
     }
 }

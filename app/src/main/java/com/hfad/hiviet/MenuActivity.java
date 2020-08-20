@@ -90,7 +90,7 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void setupCamera() {
         CameraPosition cameraPosition = new CameraPosition.Builder().
-                target(new LatLng(16.199493,105.3424463)).zoom(5.6f).build();
+                target(new LatLng(15.444571, 106.584812)).zoom(5.6f).build();
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         Toast.makeText(this, "Find Vietnam", Toast.LENGTH_LONG).show();
     }
@@ -98,9 +98,11 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
     private void prepareAssets() {
         Marker center = createMarker(new LatLng(15.444571, 106.584812), R.drawable.game_logo);
         Marker hn = createMarker(new LatLng(21.022736, 105.8019441), R.drawable.start_game);
-        Marker hcm = createMarker(new LatLng(10.7546664, 106.415029), R.drawable.list_places);
+        Marker cmu = createMarker(new LatLng(9.0579187,104.5073392), R.drawable.list_places);
+        Marker dalat = createMarker(new LatLng(11.9039022, 108.3806817), R.drawable.favorite);
         hn.setTag(GameActivity.class);
-        hcm.setTag(ListPlace.class);
+        cmu.setTag(ListPlace.class);
+        dalat.setTag(FavoriteActivity.class);
     }
 
     private Marker createMarker(LatLng latLng, int imageId) {

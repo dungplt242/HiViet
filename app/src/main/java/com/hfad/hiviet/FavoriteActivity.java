@@ -13,7 +13,7 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListPlace extends AppCompatActivity {
+public class FavoriteActivity extends AppCompatActivity {
 
     private GridView gridViewPlaces;
     private GridViewAdapter adapter;
@@ -22,7 +22,7 @@ public class ListPlace extends AppCompatActivity {
     private AdapterView.OnItemClickListener gridViewOnItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Intent intent = new Intent(ListPlace.this, PlaceItemActivity.class);
+            Intent intent = new Intent(FavoriteActivity.this, PlaceItemActivity.class);
             intent.putExtra("index", displayList.get(i).getId());
             startActivity(intent);
         }
@@ -34,11 +34,20 @@ public class ListPlace extends AppCompatActivity {
         setContentView(R.layout.activity_list_place);
         loadList();
         setupGridView();
-        //TODO: ADD CATEGORY FEATURE
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadList();
+        setupGridView();
     }
 
     private void loadList() {
-        displayList = AttractionList.builder().getList();
+        displayList = new ArrayList<>();
+        for (Attraction attraction: AttractionList.builder().getList()) {
+            if (attraction.isFavorite()) displayList.add(attraction);
+        }
     }
 
     private void setupGridView() {
