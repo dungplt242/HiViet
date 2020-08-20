@@ -19,6 +19,8 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +105,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
         private void evaluateResult() {
             final int METERS_TO_KILOMETERS = 1000;
+            final int LARGEST_DISTANCE_TO_UNLOCK = 100;
             double distanceError = calculateDistance(guessedPoint, targetPoint);
             currentCircle = mMap.addCircle(new CircleOptions().center(targetPoint)
                     .strokeWidth(8)
@@ -111,6 +114,22 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             currentScore += calculateScore(distanceError);
             mDialogueTextView.setText(String.format(getString(R.string.guess_text),
                     df.format(distanceError), currentScore));
+            if (distanceError <= LARGEST_DISTANCE_TO_UNLOCK) {
+                currentAttraction.unlock();
+                storeUnlockedAttraction();
+            }
+        }
+
+        private void storeUnlockedAttraction() {
+            try {
+                PrintStream unlockedFile = new PrintStream(openFileOutput(
+                        getString(R.string.unlocked_file_name), MODE_APPEND));
+                currentAttraction.storeAsUnlocked(unlockedFile);
+                unlockedFile.close();
+            }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
         private void showResult() {
@@ -133,7 +152,8 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void loadAttractionForGame() {
         //TODO: SELECT 5 RANDOM ATTRACTION FROM THE LIST
-        attractionList = AttractionList.builder().getList();
+        //attractionList = AttractionList.builder().getList();
+        attractionList = AttractionList.getRandomAttractions(numRounds);
     }
 
     private void initComponents() {
