@@ -1,10 +1,13 @@
 package com.hfad.hiviet;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,7 +45,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     // all time durations are in ms
     private final int numRounds = 5;
     private final int roundTime = 10000;
-    private final int delayBetweenRounds = 2000;
+    private final int delayBetweenRounds = 3000;
 
     // game states
     private int currentScore;
@@ -105,7 +108,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
         private void evaluateResult() {
             final int METERS_TO_KILOMETERS = 1000;
-            final int LARGEST_DISTANCE_TO_UNLOCK = 100;
+            final int LARGEST_DISTANCE_TO_UNLOCK = 100; //in km
             double distanceError = calculateDistance(guessedPoint, targetPoint);
             currentCircle = mMap.addCircle(new CircleOptions().center(targetPoint)
                     .strokeWidth(8)
@@ -114,10 +117,29 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             currentScore += calculateScore(distanceError);
             mDialogueTextView.setText(String.format(getString(R.string.guess_text),
                     df.format(distanceError), currentScore));
-            if (distanceError <= LARGEST_DISTANCE_TO_UNLOCK) {
-                currentAttraction.unlock();
-                storeUnlockedAttraction();
-            }
+            if (distanceError <= LARGEST_DISTANCE_TO_UNLOCK && !currentAttraction.isUnlocked())
+                handlingUnlockEvent();
+        }
+
+        private void handlingUnlockEvent() {
+            congratulationMessage();
+            currentAttraction.unlock();
+            storeUnlockedAttraction();
+        }
+
+        private void congratulationMessage() {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            final CongratFragment dialogueFragmentItem =
+                    CongratFragment.newInstance(currentAttraction.getId());
+            dialogueFragmentItem.show(fragmentManager, null);
+            final Handler handler  = new Handler();
+            final Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    dialogueFragmentItem.dismiss();
+                }
+            };
+            handler.postDelayed(runnable, 2000);
         }
 
         private void storeUnlockedAttraction() {
@@ -151,8 +173,6 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void loadAttractionForGame() {
-        //TODO: SELECT 5 RANDOM ATTRACTION FROM THE LIST
-        //attractionList = AttractionList.builder().getList();
         attractionList = AttractionList.getRandomAttractions(numRounds);
     }
 
@@ -247,7 +267,6 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         return new TimerTask() {
             @Override
             public void run() {
-                //TODO: SHOW MESSAGE (BETTER LUCK NEXT TIME OR UNLOCKED ACHIEVEMENT)
                 finish();
             }
         };

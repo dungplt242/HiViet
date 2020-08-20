@@ -66,7 +66,6 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected Void doInBackground(Void... voids) {
             loadAttractionData();
-            //TODO: LOAD USER'S UNLOCKED ATTRACTION
             loadUnlockedAttraction();
             return null;
         }

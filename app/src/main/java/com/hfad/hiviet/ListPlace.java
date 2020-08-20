@@ -33,7 +33,7 @@ public class ListPlace extends AppCompatActivity {
         setContentView(R.layout.activity_list_place);
         loadList();
         setupGridView();
-        //TODO: ADD DIRECTION FEATURES
+        //TODO: ADD CATEGORY FEATURE
     }
 
     private void loadList() {

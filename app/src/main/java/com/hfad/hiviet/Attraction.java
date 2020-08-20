@@ -55,4 +55,8 @@ public class Attraction {
     public void storeAsUnlocked(PrintStream unlockedFile) {
         unlockedFile.println(id);
     }
+
+    public int getId() {
+        return id;
+    }
 }
