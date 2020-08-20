@@ -1,11 +1,16 @@
 package com.hfad.hiviet;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -18,6 +23,7 @@ public class ListPlace extends AppCompatActivity {
     private GridView gridViewPlaces;
     private GridViewAdapter adapter;
     private List<Attraction> displayList;
+    private List<AttractionTag> selected;
 
     private AdapterView.OnItemClickListener gridViewOnItemClick = new AdapterView.OnItemClickListener() {
         @Override
@@ -33,8 +39,31 @@ public class ListPlace extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_place);
         loadList();
+        initComponents();
+    }
+
+    private void initComponents() {
+        selected = new ArrayList<>();
+        TagList.builder().resetList();
         setupGridView();
-        //TODO: ADD CATEGORY FEATURE
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.addtag, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(this, TagSelect.class);
+        startActivity(intent);
+        updateDisplay();
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void updateDisplay() {
+
     }
 
     private void loadList() {
