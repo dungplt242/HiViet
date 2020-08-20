@@ -9,7 +9,7 @@ public class Attraction {
     private String title;
     private String description;
     private String logoFileName;
-    private boolean unlocked = true;
+    private boolean unlocked = false;
     //use getResource.getIdentifier(logoFileName, "drawable", getPackageName()) to get id
 
     public Attraction(Scanner scan) {

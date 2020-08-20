@@ -45,15 +45,21 @@ public class GridViewAdapter extends ArrayAdapter<Attraction> {
 
     private void displayAttractionImage(View convertView, Attraction attraction) {
         ImageView imageView = convertView.findViewById(R.id.image_logo);
-        int logoID = context.getResources().getIdentifier(
-                attraction.getLogoFileName(), "drawable", context.getPackageName());
+        int logoID = getLogoId(attraction);
         Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), logoID);
         imageView.setImageBitmap(bmp);
     }
 
+    private int getLogoId(Attraction attraction) {
+        if (!attraction.isUnlocked()) return R.drawable.locked_attraction;
+        return context.getResources().getIdentifier(
+                attraction.getLogoFileName(), "drawable", context.getPackageName());
+    }
+
     private void displayAttractionName(View convertView, Attraction attraction) {
         TextView textView = convertView.findViewById(R.id.text_name);
-        textView.setText(attraction.getTitle());
+        if (attraction.isUnlocked()) textView.setText(attraction.getTitle());
+        else textView.setText("LOCKED");
     }
 
     @Override

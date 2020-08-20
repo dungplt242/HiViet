@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/customborder">
 
     <ImageView
-        android:layout_width="@android:dimen/thumbnail_width"
-        android:layout_height="@android:dimen/thumbnail_height"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:id="@+id/image_logo"
         android:layout_gravity="center_horizontal"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:id="@+id/text_name"
         android:text="title"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:textAlignment="center" />
 
 </LinearLayout>

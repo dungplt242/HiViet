@@ -3,6 +3,7 @@ package com.hfad.hiviet;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,9 +50,20 @@ public class PlaceItem extends DialogFragment {
     }
 
     private void display() {
-        displayLogo();
-        title.setText(item.getTitle());
-        description.setText(item.getDescription());
+        if (item.isUnlocked()) {
+            displayLogo();
+            title.setText(item.getTitle());
+            description.setText(item.getDescription());
+        }
+        else notifyForUnlock();
+    }
+
+    private void notifyForUnlock() {
+        Bitmap bmp = BitmapFactory.decodeResource(view.getResources(), R.drawable.locked_attraction);
+        logo.setImageBitmap(bmp);
+        title.setTextColor(Color.GRAY);
+        title.setText("Sorry, this attraction is not available");
+        description.setText("Select this attraction with less than 100km error to unlock.");
     }
 
     private void displayLogo() {

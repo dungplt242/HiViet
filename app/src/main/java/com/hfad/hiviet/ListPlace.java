@@ -37,10 +37,7 @@ public class ListPlace extends AppCompatActivity {
     }
 
     private void loadList() {
-        displayList = new ArrayList<>();
-        for (Attraction attraction: AttractionList.builder().getList()) {
-            if (attraction.isUnlocked()) displayList.add(attraction);
-        }
+        displayList = AttractionList.builder().getList();
     }
 
     private void setupGridView() {
