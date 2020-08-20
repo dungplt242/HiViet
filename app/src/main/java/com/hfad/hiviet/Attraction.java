@@ -2,9 +2,11 @@ package com.hfad.hiviet;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Attraction {
+    private int id;
     private LatLng location;
     private String title;
     private String description;
@@ -13,6 +15,7 @@ public class Attraction {
     //use getResource.getIdentifier(logoFileName, "drawable", getPackageName()) to get id
 
     public Attraction(Scanner scan) {
+        id = Integer.parseInt(scan.nextLine());
         title = scan.nextLine();
         description = scan.nextLine();
         double lat = Double.parseDouble(scan.nextLine()),
@@ -41,7 +44,15 @@ public class Attraction {
         return unlocked;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void unlock() {
         unlocked = true;
+    }
+
+    public void storeAsUnlocked(PrintStream unlockedFile) {
+        unlockedFile.println(id);
     }
 }

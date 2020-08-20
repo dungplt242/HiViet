@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -66,13 +67,26 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
         protected Void doInBackground(Void... voids) {
             loadAttractionData();
             //TODO: LOAD USER'S UNLOCKED ATTRACTION
+            loadUnlockedAttraction();
             return null;
         }
-    }
 
-    private void loadAttractionData() {
-        Scanner scanner = new Scanner(getResources().openRawResource(R.raw.attraction_data));
-        AttractionList.loadData(scanner);
+        private void loadUnlockedAttraction() {
+            try {
+                Scanner scanner = new Scanner(openFileInput(
+                        getString(R.string.unlocked_file_name)));
+                AttractionList.loadUnlocked(scanner);
+                scanner.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void loadAttractionData() {
+            Scanner scanner = new Scanner(getResources().openRawResource(R.raw.attraction_data));
+            AttractionList.loadData(scanner);
+            scanner.close();
+        }
     }
 
     private void setupCamera() {
