@@ -8,4 +8,5 @@
     <string name="find_attraction">Find %1$s.</string>
     <string name="unlocked_file_name">unlocked_file.txt</string>
     <string name="congrat">You\'ve just unlocked %1$s</string>
+    <string name="favorite_file_name">favorite_file.txt</string>
 </resources>

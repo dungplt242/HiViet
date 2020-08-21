@@ -3,6 +3,7 @@ package com.hfad.hiviet;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.PrintStream;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class Attraction {
@@ -11,6 +12,7 @@ public class Attraction {
     private String title;
     private String description;
     private String logoFileName;
+    HashSet<Integer> belongToTag;
     //use getResource.getIdentifier(logoFileName, "drawable", getPackageName()) to get id
     private boolean unlocked = false;
     private boolean favorite = false;
@@ -23,6 +25,7 @@ public class Attraction {
                lng = Double.parseDouble(scan.nextLine());
         location = new LatLng(lat, lng);
         logoFileName = scan.nextLine();
+        belongToTag = new HashSet<>();
     }
 
     public LatLng getLocation() {
@@ -71,5 +74,13 @@ public class Attraction {
 
     public void addToFavorite() {
         favorite = true;
+    }
+
+    public boolean isBelongToTag(int tagID) {
+        return belongToTag.contains(tagID);
+    }
+
+    public void setBelongToTag(int tagID) {
+        belongToTag.add(tagID);
     }
 }

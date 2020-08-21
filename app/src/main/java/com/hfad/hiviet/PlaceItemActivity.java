@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 public class PlaceItemActivity extends AppCompatActivity {
 
     private ImageView logo;
@@ -62,12 +65,26 @@ public class PlaceItemActivity extends AppCompatActivity {
         deleteItem.setVisible(false);
         item.removeFromFavorite();
         addItem.setVisible(true);
+        updateFavoriteData();
     }
 
     private void handleAddFavorite() {
         addItem.setVisible(false);
         item.addToFavorite();
         deleteItem.setVisible(true);
+        updateFavoriteData();
+    }
+
+    private void updateFavoriteData() {
+        try {
+            PrintStream favoriteFile = new PrintStream(openFileOutput(
+                    getString(R.string.favorite_file_name), MODE_PRIVATE));
+            AttractionList.updateFavoriteList(favoriteFile);
+            favoriteFile.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void display() {
