@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/text_description"
+        android:scrollbars = "vertical"
         android:text="description"
         android:textSize="15dp"
         android:textAlignment="center" />

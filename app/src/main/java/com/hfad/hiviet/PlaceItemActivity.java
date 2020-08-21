@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -19,7 +20,6 @@ public class PlaceItemActivity extends AppCompatActivity {
     private TextView title;
     private TextView description;
     private Attraction item;
-    private Menu menu;
     private MenuItem addItem;
     private MenuItem deleteItem;
 
@@ -34,7 +34,6 @@ public class PlaceItemActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.menu = menu;
         getMenuInflater().inflate(R.menu.favorite, menu);
         this.addItem = menu.findItem(R.id.add);
         this.deleteItem = menu.findItem(R.id.delete);
@@ -76,6 +75,7 @@ public class PlaceItemActivity extends AppCompatActivity {
             displayLogo();
             title.setText(item.getTitle());
             description.setText(item.getDescription());
+            description.setMovementMethod(new ScrollingMovementMethod());
         }
         else notifyForUnlock();
     }

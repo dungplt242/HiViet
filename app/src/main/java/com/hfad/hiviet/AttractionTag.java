@@ -2,6 +2,8 @@ package com.hfad.hiviet;
 
 import android.graphics.Bitmap;
 
+import java.util.List;
+
 public class AttractionTag {
 
     private int ID;

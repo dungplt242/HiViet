@@ -23,10 +23,11 @@
         -->
         <activity
             android:name=".GameActivity"
-            android:label="@string/title_activity_game" />
+            android:label="@string/title_activity_game" android:screenOrientation="portrait" />
         <activity
             android:name=".MenuActivity"
-            android:label="@string/title_activity_menu">
+            android:label="@string/title_activity_menu"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

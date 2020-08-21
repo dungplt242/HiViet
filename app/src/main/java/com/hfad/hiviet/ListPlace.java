@@ -1,14 +1,10 @@
 package com.hfad.hiviet;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +34,7 @@ public class ListPlace extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_place);
-        loadList();
+        loadFullList();
         initComponents();
     }
 
@@ -63,10 +59,22 @@ public class ListPlace extends AppCompatActivity {
     }
 
     private void updateDisplay() {
-
+        updateSelected();
+        if (selected.isEmpty()) loadFullList();
+        else {
+            //get lists, cast to set then intersect
+        }
+        adapter.notifyDataSetChanged();
     }
 
-    private void loadList() {
+    private void updateSelected() {
+        selected = new ArrayList<>();
+        for (AttractionTag tag: TagList.builder().getList()) {
+            if (tag.isSelected()) selected.add(tag);
+        }
+    }
+
+    private void loadFullList() {
         displayList = AttractionList.builder().getList();
     }
 
