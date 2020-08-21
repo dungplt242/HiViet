@@ -3,12 +3,17 @@ Caves
 tag_logo_caves
 0
 3
+11
+12
 
 1
 Beaches
 tag_logo_beaches
 0
 8
+10
+15
+16
 
 2
 Museums
@@ -19,12 +24,16 @@ tag_logo_museums
 3
 Local traditions
 tag_logo_local_traditions
+2
 5
 6
+13
+14
 
 4
 Architecture
 tag_logo_architecture
+2
 4
 5
 
