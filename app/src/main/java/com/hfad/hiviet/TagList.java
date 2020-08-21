@@ -2,6 +2,7 @@ package com.hfad.hiviet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class TagList {
 
@@ -16,9 +17,19 @@ public class TagList {
         list.add(new AttractionTag(5, "E", R.drawable.attraction_logo_ba_be));
     }
 
+    public TagList(Scanner scanner) {
+        while (scanner.hasNextLine()) {
+            list.add(new AttractionTag(scanner));
+        }
+    }
+
     public static TagList builder() {
         if (tagList == null) tagList = new TagList();
         return tagList;
+    }
+
+    public static void loadData(Scanner scanner) {
+        if (tagList == null) tagList = new TagList(scanner);
     }
 
     public List<AttractionTag> getList() {

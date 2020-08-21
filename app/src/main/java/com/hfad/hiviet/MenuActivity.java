@@ -67,8 +67,26 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
         protected Void doInBackground(Void... voids) {
             loadAttractionData();
             loadUnlockedAttraction();
-            //TODO: LOAD FAVORITE ATTRACTIONS (+ SAVE)
+            loadFavoriteAttraction();
+            loadTags();
             return null;
+        }
+
+        private void loadTags() {
+            Scanner scanner = new Scanner(getResources().openRawResource(R.raw.tags_data));
+            TagList.loadData(scanner);
+            scanner.close();
+        }
+
+        private void loadFavoriteAttraction() {
+            try {
+                Scanner scanner = new Scanner(openFileInput(
+                        getString(R.string.favorite_file_name)));
+                AttractionList.loadFavorite(scanner);
+                scanner.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
         private void loadUnlockedAttraction() {

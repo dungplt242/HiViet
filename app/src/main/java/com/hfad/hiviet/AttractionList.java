@@ -1,5 +1,8 @@
 package com.hfad.hiviet;
 
+import org.w3c.dom.Attr;
+
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -53,8 +56,26 @@ public class AttractionList {
         return result;
     }
 
+    public static void updateFavoriteList(PrintStream favoriteFile) {
+        for (int i=0; i<attractionList.list.size(); i++) {
+            if (attractionList.list.get(i).isFavorite())
+                favoriteFile.println(i);
+        }
+    }
+
+    public static void loadFavorite(Scanner scanner) {
+        int favoriteIndex;
+        while (scanner.hasNextLine()) {
+            favoriteIndex = Integer.parseInt(scanner.nextLine());
+            attractionList.list.get(favoriteIndex).addToFavorite();
+        }
+    }
+
     public List<Attraction> getList() {
         return list;
     }
 
+    public Attraction getItem(int index){
+        return list.get(index);
+    }
 }

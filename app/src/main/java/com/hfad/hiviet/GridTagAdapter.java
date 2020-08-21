@@ -63,7 +63,9 @@ public class GridTagAdapter extends ArrayAdapter<AttractionTag> {
 
     private void displayTagImage(MyViewHolder myViewHolder, AttractionTag tag) {
         ImageView imageView = myViewHolder.getImageView();
-        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), tag.getLogoID());
+        int logoID = context.getResources().getIdentifier(
+                tag.getLogoFileName(), "drawable", context.getPackageName());
+        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), logoID);
         imageView.setImageBitmap(bmp);
     }
 
