@@ -2,6 +2,9 @@ package com.hfad.hiviet;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,17 +22,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ListPlace extends AppCompatActivity {
+public class ListPlaceActivity extends AppCompatActivity {
 
+    private RecyclerView tagsView;
     private GridView gridViewPlaces;
     private GridViewAdapter adapter;
     private List<Attraction> displayList;
-    private List<AttractionTag> selected;
 
     private AdapterView.OnItemClickListener gridViewOnItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Intent intent = new Intent(ListPlace.this, PlaceItemActivity.class);
+            Intent intent = new Intent(ListPlaceActivity.this, PlaceItemActivity.class);
             intent.putExtra("index", displayList.get(i).getId());
             startActivity(intent);
         }
@@ -38,7 +41,7 @@ public class ListPlace extends AppCompatActivity {
     private class AttractionComparator implements Comparator<Attraction> {
         @Override
         public int compare(Attraction t1, Attraction t2) {
-            return ((Integer)t1.getId()).compareTo((Integer)t2.getId());
+            return Integer.compare(t1.getId(), t2.getId());
         }
     }
 
@@ -51,9 +54,25 @@ public class ListPlace extends AppCompatActivity {
     }
 
     private void initComponents() {
-        selected = new ArrayList<>();
         TagList.builder().resetList();
         updateGridView();
+        initTagBar();
+    }
+
+    private void initTagBar() {
+        tagsView = findViewById(R.id.tagView);
+        tagsView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        final TagBarAdapter adapter = new TagBarAdapter(TagList.builder().getList(), TagList.builder().getSelectedList());
+        tagsView.setAdapter(adapter);
+        final Observer<List<Integer>> selectedListObserver = new Observer<List<Integer>>() {
+            @Override
+            public void onChanged(List<Integer> indices) {
+                Log.d("[TagBar]", "selected list change observed");
+                adapter.notifyDataSetChanged();
+                updateDisplay();
+            }
+        };
+        TagList.builder().getSelectedList().observe(this, selectedListObserver);
     }
 
     @Override
@@ -72,11 +91,11 @@ public class ListPlace extends AppCompatActivity {
     @Override
     protected void onResume() {
         updateDisplay();
+        initTagBar();
         super.onResume();
     }
 
     private void updateDisplay() {
-        updateSelected();
         displayList = new ArrayList<>(intersectTagAttraction());
         Collections.sort(displayList, new AttractionComparator());
         updateGridView();
@@ -84,16 +103,11 @@ public class ListPlace extends AppCompatActivity {
 
     private Set<Attraction> intersectTagAttraction() {
         Set<Attraction> intersectResult = new HashSet<>(AttractionList.builder().getList());
-        for (AttractionTag tag: selected)
+        for (Integer tagIndex: TagList.builder().getSelectedList().getValue()) {
+            AttractionTag tag = TagList.builder().getList().getValue().get(tagIndex);
             intersectResult.retainAll(new HashSet<>(tag.getAttractionBelong()));
-        return intersectResult;
-    }
-
-    private void updateSelected() {
-        selected = new ArrayList<>();
-        for (AttractionTag tag: TagList.builder().getList()) {
-            if (tag.isSelected()) selected.add(tag);
         }
+        return intersectResult;
     }
 
     private void loadFullList() {

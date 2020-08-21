@@ -1,5 +1,10 @@
 package com.hfad.hiviet;
 
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,20 +12,13 @@ import java.util.Scanner;
 public class TagList {
 
     private static TagList tagList = null;
-    private List<AttractionTag> list = new ArrayList<>( );
+
+    private MutableLiveData<List<AttractionTag>> listAllTags;
+    private MutableLiveData<List<Integer>> listSelectedTags;
 
     private TagList() {
-        list.add(new AttractionTag(0, "A", R.drawable.attraction_logo_ba_be));
-        list.add(new AttractionTag(1, "B", R.drawable.attraction_logo_ba_be));
-        list.add(new AttractionTag(2, "C", R.drawable.attraction_logo_ba_be));
-        list.add(new AttractionTag(3, "D", R.drawable.attraction_logo_ba_be));
-        list.add(new AttractionTag(5, "E", R.drawable.attraction_logo_ba_be));
-    }
-
-    public TagList(Scanner scanner) {
-        while (scanner.hasNextLine()) {
-            list.add(new AttractionTag(scanner));
-        }
+        listAllTags = new MutableLiveData<List<AttractionTag>>(new ArrayList<AttractionTag>());
+        listSelectedTags = new MutableLiveData<List<Integer>>(new ArrayList<Integer>());
     }
 
     public static TagList builder() {
@@ -28,15 +26,45 @@ public class TagList {
         return tagList;
     }
 
-    public static void loadData(Scanner scanner) {
-        if (tagList == null) tagList = new TagList(scanner);
+    public void loadData(Scanner scanner) {
+        while (scanner.hasNextLine()) {
+            listAllTags.getValue().add(new AttractionTag(scanner));
+        }
+        listSelectedTags.getValue().clear();
     }
 
-    public List<AttractionTag> getList() {
-        return list;
+    public void select(int i) {
+        if (!listAllTags.getValue().get(i).isSelected()) {
+            listAllTags.getValue().get(i).select();
+            listSelectedTags.getValue().add(i);
+        }
+    }
+
+    public void unselect(int i) {
+        if (listAllTags.getValue().get(i).isSelected()) {
+            listAllTags.getValue().get(i).unselect();
+            Log.d("[TagList]", "Unselecting " + i);
+            listSelectedTags.getValue().remove(Integer.valueOf(i));
+        }
+    }
+
+    public void toggle(int i) {
+        if (listAllTags.getValue().get(i).isSelected())
+            unselect(i);
+        else
+            select(i);
+    }
+
+    public MutableLiveData<List<AttractionTag>> getList() {
+        return listAllTags;
+    }
+
+    public MutableLiveData<List<Integer>> getSelectedList() {
+        return listSelectedTags;
     }
 
     public void resetList() {
-        for (AttractionTag tag: list) tag.unselect();
+        for (AttractionTag tag: listAllTags.getValue()) tag.unselect();
+        listSelectedTags.getValue().clear();
     }
 }

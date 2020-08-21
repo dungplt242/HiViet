@@ -14,14 +14,12 @@ public class TagSelect extends AppCompatActivity {
 
     private GridView gridViewTag;
     private GridTagAdapter adapter;
-    private List<AttractionTag> displayTag;
+    private TagList tagList = null;
 
     private AdapterView.OnItemClickListener gridViewOnItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            if (displayTag.get(i).isSelected())
-                displayTag.get(i).unselect();
-            else displayTag.get(i).select();
+            tagList.toggle(i);
             adapter.notifyDataSetChanged();
         }
     };
@@ -36,12 +34,12 @@ public class TagSelect extends AppCompatActivity {
 
     private void setGridView() {
         gridViewTag = findViewById(R.id.gridViewTag);
-        adapter = new GridTagAdapter(this, R.layout.tag_item, displayTag);
+        adapter = new GridTagAdapter(this, R.layout.tag_item, tagList.getList().getValue());
         gridViewTag.setAdapter(adapter);
         gridViewTag.setOnItemClickListener(gridViewOnItemClick);
     }
 
     private void loadTags() {
-        displayTag = TagList.builder().getList();
+        tagList = TagList.builder();
     }
 }

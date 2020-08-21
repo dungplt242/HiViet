@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hfad.hiviet">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TagSelect" android:label="Select Tag"></activity>
+        <activity
+            android:name=".TagSelect"
+            android:label="Select Tag" />
         <activity android:name=".PlaceItemActivity" android:label="HiViet" />
         <activity android:name=".FavoriteActivity" android:label="Favorite" />
-        <activity android:name=".ListPlace" android:label="Gallery" />
+        <activity android:name=".ListPlaceActivity" android:label="Gallery" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -47,6 +51,6 @@
             android:value="@string/google_maps_key" />
     </application>
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
 </manifest>

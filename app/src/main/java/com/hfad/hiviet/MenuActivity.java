@@ -2,13 +2,11 @@ package com.hfad.hiviet;
 
 import androidx.fragment.app.FragmentActivity;
 
-import android.content.AsyncQueryHandler;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,7 +22,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.Scanner;
 
 public class MenuActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -74,7 +71,7 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
 
         private void loadTags() {
             Scanner scanner = new Scanner(getResources().openRawResource(R.raw.tags_data));
-            TagList.loadData(scanner);
+            TagList.builder().loadData(scanner);
             scanner.close();
         }
 
@@ -120,7 +117,7 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
         Marker cmu = createMarker(new LatLng(9.0579187,104.5073392), R.drawable.list_places);
         Marker dalat = createMarker(new LatLng(11.9039022, 108.3806817), R.drawable.favorite);
         hn.setTag(GameActivity.class);
-        cmu.setTag(ListPlace.class);
+        cmu.setTag(ListPlaceActivity.class);
         dalat.setTag(FavoriteActivity.class);
     }
 
