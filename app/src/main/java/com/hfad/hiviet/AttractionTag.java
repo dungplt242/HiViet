@@ -63,4 +63,8 @@ public class AttractionTag {
     public void unselect() {
         selected = false;
     }
+
+    public List<Attraction> getAttractionBelong() {
+        return attractionBelong;
+    }
 }

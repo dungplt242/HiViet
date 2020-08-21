@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TagSelect"></activity>
-        <activity android:name=".PlaceItemActivity" />
-        <activity android:name=".FavoriteActivity" />
-        <activity android:name=".ListPlace" />
+        <activity android:name=".TagSelect" android:label="Select Tag"></activity>
+        <activity android:name=".PlaceItemActivity" android:label="HiViet" />
+        <activity android:name=".FavoriteActivity" android:label="Favorite" />
+        <activity android:name=".ListPlace" android:label="Gallery" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

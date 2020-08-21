@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +13,11 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ListPlace extends AppCompatActivity {
 
@@ -30,6 +35,13 @@ public class ListPlace extends AppCompatActivity {
         }
     };
 
+    private class AttractionComparator implements Comparator<Attraction> {
+        @Override
+        public int compare(Attraction t1, Attraction t2) {
+            return ((Integer)t1.getId()).compareTo((Integer)t2.getId());
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +53,7 @@ public class ListPlace extends AppCompatActivity {
     private void initComponents() {
         selected = new ArrayList<>();
         TagList.builder().resetList();
-        setupGridView();
+        updateGridView();
     }
 
     @Override
@@ -54,17 +66,27 @@ public class ListPlace extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent = new Intent(this, TagSelect.class);
         startActivity(intent);
-        updateDisplay();
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        updateDisplay();
+        super.onResume();
     }
 
     private void updateDisplay() {
         updateSelected();
-        if (selected.isEmpty()) loadFullList();
-        else {
-            //get lists, cast to set then intersect
-        }
-        adapter.notifyDataSetChanged();
+        displayList = new ArrayList<>(intersectTagAttraction());
+        Collections.sort(displayList, new AttractionComparator());
+        updateGridView();
+    }
+
+    private Set<Attraction> intersectTagAttraction() {
+        Set<Attraction> intersectResult = new HashSet<>(AttractionList.builder().getList());
+        for (AttractionTag tag: selected)
+            intersectResult.retainAll(new HashSet<>(tag.getAttractionBelong()));
+        return intersectResult;
     }
 
     private void updateSelected() {
@@ -78,7 +100,7 @@ public class ListPlace extends AppCompatActivity {
         displayList = AttractionList.builder().getList();
     }
 
-    private void setupGridView() {
+    private void updateGridView() {
         gridViewPlaces = findViewById(R.id.gridViewPlace);
         adapter = new GridViewAdapter(this, R.layout.attraction_thumbnail, displayList);
         gridViewPlaces.setAdapter(adapter);

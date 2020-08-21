@@ -7,15 +7,15 @@
     android:background="#ffffff">
 
     <ImageView
-        android:layout_width="125dp"
-        android:layout_height="125dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:id="@+id/image_logo"
         android:layout_gravity="center_horizontal"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="match_parent"
         android:id="@+id/text_name"
         android:text="title"
         android:textSize="15dp"

@@ -21,10 +21,8 @@ public class CongratFragment extends DialogFragment {
 
     private ImageView logo;
     private TextView message;
-    private TextView description;
     private Attraction item;
     private View view;
-    private Timer timer = new Timer();
 
     public static CongratFragment newInstance(int index) {
         Bundle args = new Bundle();
