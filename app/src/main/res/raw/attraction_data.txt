@@ -58,3 +58,45 @@ Tranquil Ba Be National Park is absolutely stunning with the three interlinked B
 22.396550
 105.615684
 attraction_logo_ba_be
+10
+Con Dao Islands
+Under French rule, the Con Dao Islands were known as the Devil’s Island of Indochina, a place where thousands of prisoners of war were kept. Today, this group of 16 islands off the southern coast of Vietnam has a completely different purpose. Visitors come for the beautiful beaches and the abundance of scuba diving and snorkeling spots. However, the history of Con Dao can still be explored at some of the prison buildings that still stand.
+8.706858
+106.610877
+attraction_logo_con_dao_island
+11
+Tam Coc
+In the Ninh Binh province of Northern Vietnam near is Tam Coc, which translates to English as three caves. The three caves are nestled in a scenic landscape of limestone cliffs and rice paddies, and the river winds through the region. The caves are called Hang Cả, Hang Hai, and Hang Ba, and they serve as the area’s main attraction. Guided boat tours take you to the caves and along the Ngo Dong River, which is often dotted with floating vendors capitalizing on the tourist visiting on a day trip from Hanoi.
+20.216201
+105.910989
+attraction_logo_tam_coc
+12
+Hang Son Doong Cave
+One of the largest caves in the world, and certainly the largest in Vietnam, is Hang Son Doong. Approximately three million years old, Hang Son Doong Cave is an incredible destination unlike anywhere else on the planet. The cave is enormous, and it is possible for dozens of people to camp within it at a time. Bright blue water pools are located in the cave, and a river runs through it. Lush greenery lines the walls, thanks to erosion that lets in beams of sunlight. The cave is ethereal, and guided tours are available to best explore this amazing landmark.
+17.547157
+106.143925
+attraction_logo_hang_son_doong_cave
+13
+Bac Ha Market
+Once a week, the quiet town of Bac Ha becomes a hub of culture and trade in Northwest Vietnam. Residents from the surrounding villages and valleys flock to Bac Ha, and the roads are filled with buses packed with tourists. Visiting on a Sunday means watching locals in their traditional ethnic dress, sipping the juice from fresh coconuts and browsing countless stalls. Shoppers can find everything for sale in Bac Ha, including water buffalo, delicious Hmong and Thay cuisine, brightly colored fabrics and fragrant spices.
+22.535043
+104.292839
+attraction_logo_bac_ha_market
+14
+Mekong Delta
+The Mekong Delta is the region in southern Vietnam where the Mekong River approaches and empties into the sea. It is a very rich and lush area, covered with rice fields, that produces about half of the total of Vietnam’s agricultural output. Subsequently, life in the Mekong Delta revolves much around the river, and all the villages are often accessible by river rather than by road.
+10.299078
+106.031123
+attraction_logo_mekong_delta
+15
+Mui Ne
+The formerly little-inhabited beach south of the fishing village of Mui Ne has seen some serious development in the last 15 years. Due to strong sea breezes it is a popular destination in Vietnam for kite- and windsurfing. No trip to Mui Ne is complete without a trip to the famous sand dunes located a short distance north of the town. The vast sandy expanse provide some great panoramic views especially during sunset.
+10.918639
+108.289997
+attraction_logo_mui_ne
+16
+Phu Quoc
+Located in front of the Cambodia coast, Phu Quoc is the largest island in Vietnam. Phu Quoc is what Phuket would be if it hadn’t been overrun by development. The island features pristine tropical forests, undamaged coral reefs and great beaches. One of its beaches, named Bai Dai (Long Beach), was chosen by the ABC News as one of five beautiful and clean beaches. Phu Quoc is famous for producing the best nuoc mam or fermented fish sauce in the world.
+10.316559
+103.983460
+attraction_logo_phu_quoc
