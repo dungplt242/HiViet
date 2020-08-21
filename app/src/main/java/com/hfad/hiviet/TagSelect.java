@@ -14,7 +14,7 @@ public class TagSelect extends AppCompatActivity {
 
     private GridView gridViewTag;
     private GridTagAdapter adapter;
-    private TagList tagList = null;
+    private TagList tagList;
 
     private AdapterView.OnItemClickListener gridViewOnItemClick = new AdapterView.OnItemClickListener() {
         @Override

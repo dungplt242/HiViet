@@ -26,7 +26,6 @@ public class ListPlaceActivity extends AppCompatActivity {
 
     private RecyclerView tagsView;
     private GridView gridViewPlaces;
-    private GridViewAdapter adapter;
     private List<Attraction> displayList;
 
     private AdapterView.OnItemClickListener gridViewOnItemClick = new AdapterView.OnItemClickListener() {
@@ -38,7 +37,7 @@ public class ListPlaceActivity extends AppCompatActivity {
         }
     };
 
-    private class AttractionComparator implements Comparator<Attraction> {
+    private static class AttractionComparator implements Comparator<Attraction> {
         @Override
         public int compare(Attraction t1, Attraction t2) {
             return Integer.compare(t1.getId(), t2.getId());
@@ -116,7 +115,7 @@ public class ListPlaceActivity extends AppCompatActivity {
 
     private void updateGridView() {
         gridViewPlaces = findViewById(R.id.gridViewPlace);
-        adapter = new GridViewAdapter(this, R.layout.attraction_thumbnail, displayList);
+        GridViewAdapter adapter = new GridViewAdapter(this, R.layout.attraction_thumbnail, displayList);
         gridViewPlaces.setAdapter(adapter);
         gridViewPlaces.setOnItemClickListener(gridViewOnItemClick);
     }
