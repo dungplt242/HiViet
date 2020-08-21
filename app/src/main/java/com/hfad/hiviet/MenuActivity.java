@@ -108,7 +108,6 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
         CameraPosition cameraPosition = new CameraPosition.Builder().
                 target(new LatLng(15.444571, 106.584812)).zoom(5.6f).build();
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        Toast.makeText(this, "Find Vietnam", Toast.LENGTH_LONG).show();
     }
 
     private void prepareAssets() {
@@ -135,7 +134,6 @@ public class MenuActivity extends FragmentActivity implements OnMapReadyCallback
     private void mapSettings() {
         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style));
         mMap.getUiSettings().setAllGesturesEnabled(false);
-        mMap.getUiSettings().setScrollGesturesEnabled(true);
         mMap.setOnMarkerClickListener(markerOnClickListener);
     }
 }

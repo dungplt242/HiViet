@@ -3,7 +3,7 @@
     <string name="title_activity_menu">HiViet</string>
     <string name="title_activity_game">Map</string>
     <string name="time_out_text">Time out! Your score is %1$d.</string>
-    <string name="guess_text">Your guess was %1$s km away. Your score is %2$d.</string>
+    <string name="guess_text">Your guess was %1$s km away.\nYour score is %2$d.</string>
     <string name="total_score">Your total score is %1$d.</string>
     <string name="find_attraction">Find %1$s.</string>
     <string name="unlocked_file_name">unlocked_file.txt</string>

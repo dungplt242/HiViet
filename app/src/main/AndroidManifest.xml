@@ -15,7 +15,7 @@
             android:name=".TagSelect"
             android:label="Select Tag" />
         <activity android:name=".PlaceItemActivity" android:label="HiViet" />
-        <activity android:name=".FavoriteActivity" android:label="Favorite" />
+        <activity android:name=".FavoriteActivity" android:label="Favourite" />
         <activity android:name=".ListPlaceActivity" android:label="Gallery" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

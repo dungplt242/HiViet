@@ -1,25 +1,23 @@
 package com.hfad.hiviet;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteActivity extends AppCompatActivity {
 
-    private GridView gridViewPlaces;
-    private GridViewAdapter adapter;
+    private ListView listViewPlaces;
+    private ListViewAdapter adapter;
     private List<Attraction> displayList;
 
-    private AdapterView.OnItemClickListener gridViewOnItemClick = new AdapterView.OnItemClickListener() {
+    private AdapterView.OnItemClickListener listViewOnItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent(FavoriteActivity.this, PlaceItemActivity.class);
@@ -31,16 +29,16 @@ public class FavoriteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_place);
+        setContentView(R.layout.favorite_activity);
         loadList();
-        setupGridView();
+        setupListView();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         loadList();
-        setupGridView();
+        setupListView();
     }
 
     private void loadList() {
@@ -50,10 +48,10 @@ public class FavoriteActivity extends AppCompatActivity {
         }
     }
 
-    private void setupGridView() {
-        gridViewPlaces = findViewById(R.id.gridViewPlace);
-        adapter = new GridViewAdapter(this, R.layout.attraction_thumbnail, displayList);
-        gridViewPlaces.setAdapter(adapter);
-        gridViewPlaces.setOnItemClickListener(gridViewOnItemClick);
+    private void setupListView() {
+        listViewPlaces = findViewById(R.id.listViewFavorite);
+        adapter = new ListViewAdapter(this, R.layout.favorite_thumbnail, displayList);
+        listViewPlaces.setAdapter(adapter);
+        listViewPlaces.setOnItemClickListener(listViewOnItemClick);
     }
 }

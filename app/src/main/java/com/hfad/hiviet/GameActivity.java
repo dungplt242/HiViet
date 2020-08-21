@@ -59,7 +59,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker targetMarker;
 
     // utilities
-    private DecimalFormat df = new DecimalFormat("#.####");
+    private DecimalFormat df = new DecimalFormat("#");
     private Timer timer;
     private CountDownTimer countDownTimer;
 
